@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 const Home = () => {
   const [pokemons, setPokemons] = useState([]);
@@ -26,19 +25,14 @@ const Home = () => {
   }, []);
 
   const handleCardClick = (pokemon) => {
-    navigate(`/pokemon/${pokemon.id}`);
+    navigate(`/battle/${pokemon.id}`, { state: { selectedPokemon: pokemon } });
   };
 
   return (
     <div className="p-4">
-      <h1 className="flex p-4 kustify-center text-[#d5c3aa] font-bold">
+      <h1 className="flex p-4 justify-center text-[#d5c3aa] font-bold">
         Pokemons of all kind
       </h1>
-      {/* <Link to="/my-roster">
-        <button className="bg-gray-800 hover:bg-blue-600 text-[#d5c3aa] px-4 py-2 rounded-lg mb-4">
-          Choose a Pokemon
-        </button>
-      </Link> */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 w-full">
         {pokemons.map((pokemon, index) => (
           <div

@@ -6,10 +6,18 @@ import {
 } from "react-router-dom";
 
 import Home from "./pages/Home";
-// import toast, { Toaster } from "react-hot-toast";
+import BattlePage from "./pages/BattlePage";
 
 const router = createBrowserRouter(
-  createRoutesFromElements(<Route path="/" element={<Home />}></Route>)
+  createRoutesFromElements(
+    <>
+      <Route path="/" element={<Home />} />
+
+      <Route path="/battle/:pokemonId" element={<BattlePage />} />
+
+      <Route path="*" element={<div>404 Not Found</div>} />
+    </>
+  )
 );
 
 function App() {
