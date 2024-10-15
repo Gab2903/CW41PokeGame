@@ -56,6 +56,8 @@ const Home = () => {
   };
 
   const handleSaveUsername = () => {
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
     const newUser = {
       username: username,
       score: 0,
