@@ -1,4 +1,3 @@
-// *BONUS* My Roster Page: Display the list of Pokemon the user has selected. Include an option to remove Pokemon from the roster. You can either persist this to localStorage or to the database.
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -6,21 +5,32 @@ const Roster = () => {
   const [roster, setRoster] = useState(
     () => JSON.parse(localStorage.getItem("pokemonRoster")) || []
   );
-  const [username, setUsername] = useState(
-    () => localStorage.getItem("username") || ""
-  ); // PLayername aus dem localStorage
+  const [username, setUsername] = useState("");
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedRoster =
       JSON.parse(localStorage.getItem("pokemonRoster")) || [];
     setRoster(storedRoster);
+
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    if (users.length > 0) {
+      const lastUsername = users[users.length - 1].username;
+      setUsername(lastUsername);
+    } else {
+      setUsername("Guest");
+    }
   }, []);
 
   const handleRemovePokemon = (id) => {
     const updatedRoster = roster.filter((pokemon) => pokemon.id !== id);
     setRoster(updatedRoster);
-    localStorage.setItem("pokemonRoster", JSON.stringify(updatedRoster)); // Update local
+    localStorage.setItem("pokemonRoster", JSON.stringify(updatedRoster));
+  };
+
+  const handleSelectPokemon = (pokemon) => {
+    navigate("/battle", { state: { selectedPokemon: pokemon } });
   };
 
   const goToHome = () => {
@@ -29,14 +39,13 @@ const Roster = () => {
 
   return (
     <div className="p-8">
-      {/* Playername in Headline anzeigen */}
       <h1 className="flex p-6 justify-center text-[#d5c3aa] font-bold">
-        Pokémon Roster of {username}
+        Pokémon Roster of: {username || "Guest"}
       </h1>
       <div className="flex justify-center mb-4">
         <button
           onClick={goToHome}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-gray-500 text-white px-4 py-2 rounded"
         >
           Home
         </button>
@@ -82,13 +91,20 @@ const Roster = () => {
                   </p>
                 </div>
 
-                {/* löschen aus Roster */}
-                <button
-                  onClick={() => handleRemovePokemon(pokemon.id)}
-                  className="bg-red-500 text-white px-2 py-1 mt-4 rounded"
-                >
-                  Remove
-                </button>
+                <div className="flex space-x-2 mt-4">
+                  <button
+                    onClick={() => handleSelectPokemon(pokemon)}
+                    className="bg-gray-500 text-white px-2 py-1 rounded"
+                  >
+                    Select
+                  </button>
+                  <button
+                    onClick={() => handleRemovePokemon(pokemon.id)}
+                    className="bg-red-500 text-white px-2 py-1 rounded"
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
             );
           })

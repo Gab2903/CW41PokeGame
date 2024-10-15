@@ -11,7 +11,7 @@ import Roster from "./pages/Roster";
 import Navbar from "./components/Navbar";
 import { Outlet } from "react-router-dom";
 
-// Layout für NAvbar
+// Layout für Navbar
 const Layout = () => {
   return (
     <>
@@ -29,7 +29,7 @@ const router = createBrowserRouter(
     <>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/battle/:pokemonId" element={<BattlePage />} />
+        <Route path="/battle" element={<BattlePage />} /> {/* Updated Route */}
         <Route path="/roster" element={<Roster />} />
         <Route path="*" element={<div>404 Not Found</div>} />
       </Route>
