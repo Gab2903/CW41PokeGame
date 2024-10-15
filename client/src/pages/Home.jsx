@@ -89,7 +89,7 @@ const Home = () => {
         />
         <button
           onClick={handleSaveUsername}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-gray-500 text-white px-4 py-2 rounded"
         >
           Save
         </button>
@@ -97,7 +97,7 @@ const Home = () => {
       <div className="flex justify-center mb-4">
         <button
           onClick={goToRoster}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-gray-500 text-white px-4 py-2 rounded"
         >
           Your Pokémon Roster
         </button>
