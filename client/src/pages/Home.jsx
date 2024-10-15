@@ -56,19 +56,15 @@ const Home = () => {
   };
 
   const handleSaveUsername = () => {
-    // Hole das Array von Nutzern aus dem localStorage oder erzeuge ein leeres Array
     let users = JSON.parse(localStorage.getItem("users")) || [];
 
-    // Erstelle einen neuen User mit dem username und score = 0
     const newUser = {
       username: username,
       score: 0,
     };
 
-    // Füge den neuen User dem Array hinzu
     users.push(newUser);
 
-    // Speichere das aktualisierte Array im localStorage
     localStorage.setItem("users", JSON.stringify(users));
 
     console.log("User hinzugefügt:", newUser);
