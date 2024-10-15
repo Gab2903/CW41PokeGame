@@ -7,7 +7,7 @@ import {
 
 import Home from "./pages/Home";
 import BattlePage from "./pages/BattlePage";
-
+//router
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
