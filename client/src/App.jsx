@@ -7,15 +7,32 @@ import {
 
 import Home from "./pages/Home";
 import BattlePage from "./pages/BattlePage";
-//router
+import Roster from "./pages/Roster";
+import Navbar from "./components/Navbar";
+import { Outlet } from "react-router-dom";
+
+// Layout für NAvbar
+const Layout = () => {
+  return (
+    <>
+      <Navbar />
+      <main className="p-8">
+        <Outlet />
+      </main>
+    </>
+  );
+};
+
+// Router
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<Home />} />
-
-      <Route path="/battle/:pokemonId" element={<BattlePage />} />
-
-      <Route path="*" element={<div>404 Not Found</div>} />
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/battle/:pokemonId" element={<BattlePage />} />
+        <Route path="/roster" element={<Roster />} />
+        <Route path="*" element={<div>404 Not Found</div>} />
+      </Route>
     </>
   )
 );
