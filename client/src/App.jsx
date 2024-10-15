@@ -7,6 +7,7 @@ import {
 
 import Home from "./pages/Home";
 import BattlePage from "./pages/BattlePage";
+import Roster from "./pages/Roster";
 //router
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -14,6 +15,8 @@ const router = createBrowserRouter(
       <Route path="/" element={<Home />} />
 
       <Route path="/battle/:pokemonId" element={<BattlePage />} />
+
+      <Route path="/roster" element={<Roster />} />
 
       <Route path="*" element={<div>404 Not Found</div>} />
     </>
