@@ -9,9 +9,7 @@ const Home = () => {
     () => JSON.parse(localStorage.getItem("pokemonRoster")) || []
   );
   const [maxReached, setMaxReached] = useState(false); // max 10 Pokémon ausgewählt
-  const [username, setUsername] = useState(
-    () => localStorage.getItem("username") || ""
-  ); // Username aus localStorage
+  const [username, setUsername] = useState(""); // Username aus localStorage
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -58,7 +56,22 @@ const Home = () => {
   };
 
   const handleSaveUsername = () => {
-    localStorage.setItem("username", username); // Username in local speichern
+    // Hole das Array von Nutzern aus dem localStorage oder erzeuge ein leeres Array
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    // Erstelle einen neuen User mit dem username und score = 0
+    const newUser = {
+      username: username,
+      score: 0,
+    };
+
+    // Füge den neuen User dem Array hinzu
+    users.push(newUser);
+
+    // Speichere das aktualisierte Array im localStorage
+    localStorage.setItem("users", JSON.stringify(users));
+
+    console.log("User hinzugefügt:", newUser);
   };
 
   const goToRoster = () => {
