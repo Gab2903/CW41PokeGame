@@ -68,7 +68,7 @@ const Home = () => {
   return (
     <div className="p-8 relative">
       <h1 className="flex p-6 justify-center text-[#d5c3aa] font-bold">
-        Pokemons of all kind
+        Battle Pokèmons
       </h1>
       <div className="flex justify-center mb-4">
         <input
