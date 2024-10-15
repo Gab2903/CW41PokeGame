@@ -7,7 +7,8 @@ const BattlePage = () => {
   const { selectedPokemon } = location.state || {};
   const [randomPokemon, setRandomPokemon] = useState(null);
   const [battleResult, setBattleResult] = useState(null);
-  const [loser, setLoser] = useState(null);
+  const [message, setMessage] = useState("");
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     const fetchRandomPokemon = async () => {
@@ -24,6 +25,12 @@ const BattlePage = () => {
     };
 
     fetchRandomPokemon();
+
+    // Get the last username from local storage
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    if (users.length > 0) {
+      setUsername(users[users.length - 1].username);
+    }
   }, []);
 
   const getStats = (pokemon) => {
@@ -39,15 +46,24 @@ const BattlePage = () => {
   const handleFight = () => {
     const selectedHP = selectedStats.hp;
     const randomHP = randomStats.hp;
-    const hpDifference = Math.abs(selectedHP - randomHP);
     const winner = selectedHP > randomHP ? selectedPokemon : randomPokemon;
-    const loserPokemon =
-      selectedHP > randomHP ? randomPokemon : selectedPokemon;
 
-    localStorage.setItem("hpDifference", hpDifference);
+    const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    setBattleResult(winner);
-    setLoser(loserPokemon);
+    if (winner === selectedPokemon) {
+      if (users.length > 0) {
+        const lastUserIndex = users.length - 1;
+        users[lastUserIndex].score += 10;
+        localStorage.setItem("users", JSON.stringify(users));
+      }
+      setMessage(`${username} wins!`);
+      setBattleResult(selectedPokemon);
+    } else {
+      setMessage(`You lose!`);
+      setBattleResult(randomPokemon);
+    }
+
+    localStorage.setItem("hpDifference", Math.abs(selectedHP - randomHP));
   };
 
   return (
@@ -103,6 +119,7 @@ const BattlePage = () => {
             <h2 className="text-3xl font-semibold mb-2">
               {battleResult.name} Wins!
             </h2>
+            <h3 className="text-xl mb-2">{message}</h3>
             <img
               src={battleResult.sprites.other.showdown.front_shiny}
               alt={battleResult.name}
@@ -110,23 +127,12 @@ const BattlePage = () => {
             />
             <div className="text-lg font-semibold mb-2">Stats:</div>
             <div className="text-sm">
+              <p>HP: {Math.max(selectedStats.hp, randomStats.hp)}</p>
               <p>
-                HP:{" "}
-                {selectedStats.hp > randomStats.hp
-                  ? selectedStats.hp
-                  : randomStats.hp}
+                Attack: {Math.max(selectedStats.attack, randomStats.attack)}
               </p>
               <p>
-                Attack:{" "}
-                {selectedStats.attack > randomStats.attack
-                  ? selectedStats.attack
-                  : randomStats.attack}
-              </p>
-              <p>
-                Defense:{" "}
-                {selectedStats.defense > randomStats.defense
-                  ? selectedStats.defense
-                  : randomStats.defense}
+                Defense: {Math.max(selectedStats.defense, randomStats.defense)}
               </p>
             </div>
             <button
@@ -140,7 +146,7 @@ const BattlePage = () => {
       </div>
       {!battleResult && (
         <button
-          className="mt-8 bg-gray-500 hover:bggray-600 text-white font-semibold py-2 px-6 rounded"
+          className="mt-8 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-6 rounded"
           onClick={handleFight}
         >
           Fight
