@@ -52,7 +52,7 @@ const BattlePage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4 mx-4 my-4">
-      <h1 className="text-4xl font-bold mb-6 mb-16">Let's Fight!</h1>
+      <h1 className="text-4xl font-bold mt-6 mb-16">Let's Fight!</h1>
       <div className="flex flex-col items-center justify-between w-full max-w-screen-xl mx-auto">
         {!battleResult ? (
           <div className="flex flex-col md:flex-row items-center justify-between w-full">
